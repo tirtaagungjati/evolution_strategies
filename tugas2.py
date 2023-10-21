@@ -57,8 +57,13 @@ def ES_plus(miu, lambda_, n_max_iter):
             iterasiku = i
             break
     
+    best_individual = parents[np.argmin(np.apply_along_axis(himmelblau, 1, parents))]
+    best_x,best_y = best_individual
     print(f"Generasi Atau Iterasi Berhasil berhenti disaat iterasi mencari gen ke-{iterasiku}")
     print(f"Karena nilai fitness atau F(x,y) sudah mencapai == {np.min(fitness)}")
+    print(f"Nilai Terbaik yang dihasilkan untuk variabel x = {best_x}, sedangkan untuk variabel y = {best_y}")
+    print(f"F(x,y) Himmelblau : {himmelblau(best_individual)}")
+
     # Plot sebaran populasi akhir generasi  
     plt.figure(2)
     globalMinima = [[3.0, 2.0], [-2.805118, 3.131312], [-3.779310, -3.283186], [3.584458, -1.848126]]
@@ -76,19 +81,13 @@ def ES_plus(miu, lambda_, n_max_iter):
     plt.ylabel('Fitness')
     
     plt.show()
-    
-    return parents[np.argmin(np.apply_along_axis(himmelblau, 1, parents))]
 
-# Set the seed for the random number generator
-SEED_RANDOM = 42
-random.seed(SEED_RANDOM)
-np.random.seed(SEED_RANDOM)
-
-miu = 100
-lambda_ = 7 * miu
-n_max_iter = 500
-
-best_individual = ES_plus(miu, lambda_, n_max_iter)
-best_x,best_y = best_individual
-print(f"Nilai Terbaik yang dihasilkan untuk variabel x = {best_x}, sedangkan untuk variabel y = {best_y}")
-print(f"F(x,y) Himmelblau : {himmelblau(best_individual)}")
+if __name__ == "__main__":
+    # Set the seed for the random number generator
+    SEED_RANDOM = 42
+    random.seed(SEED_RANDOM)
+    np.random.seed(SEED_RANDOM)
+    miu = 100
+    lambda_ = 7 * miu
+    n_max_iter = 500
+    ES_plus(miu, lambda_, n_max_iter)
